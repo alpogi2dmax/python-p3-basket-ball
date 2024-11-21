@@ -182,3 +182,68 @@ def game_dict():
             ]
         }
     }
+
+def num_points_per_game(player_name):
+    players = game_dict()['home']['players'] + game_dict()['away']['players']
+    for player in players:
+        if player['name'] == player_name:
+            return player['points_per_game']
+    return 'None'
+
+def player_age(player_name):
+    players = game_dict()['home']['players'] + game_dict()['away']['players']
+    for player in players:
+        if player['name'] == player_name:
+            return player['age']
+    return 'None'
+
+def team_colors(teamname):
+    game_stats = game_dict()
+    for team in game_stats.values():
+        if team['team_name'] == teamname:
+            return team['colors']
+    return 'None'
+
+def team_names():
+    game_stats = game_dict()
+    team_list = []
+    for team in game_stats.values():
+        team_list.append(team['team_name'])
+    return team_list
+
+def player_numbers(teamname):
+    numbers = []
+    game_stats = game_dict()
+    for team in game_stats.values():
+        if team['team_name'] == teamname:
+            for player in team['players']:
+                numbers.append(player['number'])
+    return numbers
+
+
+def player_stats(player_name):
+    players = game_dict()['home']['players'] + game_dict()['away']['players']
+    for player in players:
+        if player['name'] == player_name:
+            return player
+    return 'None'
+
+def average_rebounds_by_shoe_brand():
+    players = game_dict()['home']['players'] + game_dict()['away']['players']
+    shoes = []
+    for player in players:
+        if len(shoes) == 0:
+            shoes.append(player['shoe_brand'])
+        elif player['shoe_brand'] not in shoes:
+            shoes.append(player['shoe_brand'])
+    shoe_list = []
+    for shoe in shoes:
+        rebound_array = []
+        for player in players:
+            if player['shoe_brand'] == shoe:
+                rebound_array.append(player['rebounds_per_game'])
+        rebound_average = sum(rebound_array) / len(rebound_array)
+        shoe_object = f"{shoe}:  {rebound_average:.2f}"
+        shoe_list.append(shoe_object)
+    for shoe in shoe_list:
+        print(shoe)
